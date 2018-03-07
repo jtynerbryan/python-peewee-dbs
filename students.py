@@ -3,7 +3,7 @@ from peewee import *
 db = SqliteDatabase('students.db')
 
 class BaseModel(Model):
-    """A base model that will use our Postgresql database"""
+    """A base model that will use our Sqlite3 database"""
     class Meta:
         database = db
 
