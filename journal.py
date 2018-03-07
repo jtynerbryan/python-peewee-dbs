@@ -2,6 +2,7 @@
 
 from collections import OrderedDict
 import datetime
+import os
 import sys
 
 from peewee import *
@@ -27,15 +28,20 @@ def menu_loop():
     choice = None
 
     while choice != 'q':
+        clear()
         print("Enter 'q' to quit")
         for key, value in menu.items():
             print(f'{key}) {value.__doc__}')
         choice = input('Action: ').lower().strip()
 
         if choice in menu:
+            clear()
             menu[choice]()
         else:
             continue
+
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def add_entry():
     """Create New Entry"""
@@ -54,6 +60,7 @@ def view_entries(search_query=None):
         entries = entries.where(Entry.content.contains(search_query))
     for entry in entries:
         timestamp = entry.timestamp.strftime('%A %B %d, %Y %I:%M%p')
+        clear()
         print(f"\n{timestamp}\n{'='*len(timestamp)} \n{entry.content}")
         user_response = input("\nPress 'N' for next entry, 'd' delete entry, 'q' return to Main Menu (N/q) ").lower().strip()
         if  user_response == 'q':
